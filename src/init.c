@@ -93,11 +93,8 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Reset;
 	TIM_OCInitStructure.TIM_Pulse = 1500;
 	TIM_OC1Init(TIM1, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1400;
 	TIM_OC2Init(TIM1, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1300;
 	TIM_OC3Init(TIM1, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1200;
 	TIM_OC4Init(TIM1, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM1, TIM_OCPreload_Enable);
 	TIM_OC2PreloadConfig(TIM1, TIM_OCPreload_Enable);
@@ -119,11 +116,8 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OCInitStructure.TIM_Pulse = 1500;
 	TIM_OC1Init(TIM2, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1400;
 	TIM_OC2Init(TIM2, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1300;
 	TIM_OC3Init(TIM2, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1200;
 	TIM_OC4Init(TIM2, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM2, TIM_OCPreload_Enable);
 	TIM_OC2PreloadConfig(TIM2, TIM_OCPreload_Enable);
@@ -145,11 +139,8 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OCInitStructure.TIM_Pulse = 1500;
 	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1400;
 	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1300;
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1200;
 	TIM_OC4Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM3, TIM_OCPreload_Enable);
 	TIM_OC2PreloadConfig(TIM3, TIM_OCPreload_Enable);
@@ -169,9 +160,8 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OCInitStructure.TIM_Pulse = 1400;
+	TIM_OCInitStructure.TIM_Pulse = 1500;
 	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1300;
 	TIM_OC3Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
 	TIM_OC3PreloadConfig(TIM4, TIM_OCPreload_Enable);
@@ -191,7 +181,6 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OCInitStructure.TIM_Pulse = 1500;
 	TIM_OC1Init(TIM9, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1400;
 	TIM_OC2Init(TIM9, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM9, TIM_OCPreload_Enable);
 	TIM_OC2PreloadConfig(TIM9, TIM_OCPreload_Enable);
@@ -211,7 +200,6 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OCInitStructure.TIM_Pulse = 1500;
 	TIM_OC1Init(TIM12, &TIM_OCInitStructure);
-	TIM_OCInitStructure.TIM_Pulse = 1400;
 	TIM_OC2Init(TIM12, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM12, TIM_OCPreload_Enable);
 	TIM_OC2PreloadConfig(TIM12, TIM_OCPreload_Enable);

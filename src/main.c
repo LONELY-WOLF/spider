@@ -1,6 +1,5 @@
 #include "stm32f4xx.h"
-
-extern void spider_init();
+#include "init.h"
 
 int main()
 {
@@ -10,5 +9,7 @@ int main()
 	spider_init();
 
 	while (1)
-		;
+	{
+
+	}
 }
