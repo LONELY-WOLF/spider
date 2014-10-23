@@ -1,4 +1,5 @@
 #include "stm32f4xx.h"
+#include "legs.h"
 
 void gpio_init()
 {
@@ -208,8 +209,116 @@ void tim_init()
 	TIM_Cmd(TIM12, ENABLE);
 }
 
+void legs_init()
+{
+	//R1
+	//H1
+	Legs[LEG_R1].H1Conf.TIM = TIM9;
+	Legs[LEG_R1].H1Conf.OC = 2;
+	//V2
+	Legs[LEG_R1].V2Conf.TIM = TIM9;
+	Legs[LEG_R1].V2Conf.OC = 1;
+	//V3
+	Legs[LEG_R1].V3Conf.TIM = TIM4;
+	Legs[LEG_R1].V3Conf.OC = 3;
+	//R2
+	//H1
+	Legs[LEG_R2].H1Conf.TIM = TIM4;
+	Legs[LEG_R2].H1Conf.OC = 2;
+	//V2
+	Legs[LEG_R2].V2Conf.TIM = TIM3;
+	Legs[LEG_R2].V2Conf.OC = 2;
+	//V3
+	Legs[LEG_R2].V3Conf.TIM = TIM3;
+	Legs[LEG_R2].V3Conf.OC = 3;
+	//R3
+	//H1
+	Legs[LEG_R3].H1Conf.TIM = TIM1;
+	Legs[LEG_R3].H1Conf.OC = 4;
+	//V2
+	Legs[LEG_R3].V2Conf.TIM = TIM2;
+	Legs[LEG_R3].V2Conf.OC = 1;
+	//V3
+	Legs[LEG_R3].V3Conf.TIM = TIM3;
+	Legs[LEG_R3].V3Conf.OC = 1;
+	//L1
+	//H1
+	Legs[LEG_L1].H1Conf.TIM = TIM2;
+	Legs[LEG_L1].H1Conf.OC = 2;
+	//V2
+	Legs[LEG_L1].V2Conf.TIM = TIM2;
+	Legs[LEG_L1].V2Conf.OC = 4;
+	//V3
+	Legs[LEG_L1].V3Conf.TIM = TIM2;
+	Legs[LEG_L1].V3Conf.OC = 3;
+	//L2
+	//H1
+	Legs[LEG_L2].H1Conf.TIM = TIM3;
+	Legs[LEG_L2].H1Conf.OC = 4;
+	//V2
+	Legs[LEG_L2].V2Conf.TIM = TIM1;
+	Legs[LEG_L2].V2Conf.OC = 1;
+	//V3
+	Legs[LEG_L2].V3Conf.TIM = TIM1;
+	Legs[LEG_L2].V3Conf.OC = 2;
+	//L3
+	//H1
+	Legs[LEG_L3].H1Conf.TIM = TIM1;
+	Legs[LEG_L3].H1Conf.OC = 3;
+	//V2
+	Legs[LEG_L3].V2Conf.TIM = TIM12;
+	Legs[LEG_L3].V2Conf.OC = 1;
+	//V3
+	Legs[LEG_L3].V3Conf.TIM = TIM12;
+	Legs[LEG_L3].V3Conf.OC = 2;
+
+	for (int i = 0; i < 6; i++)
+	{
+		Legs[i].H1 = 1500;
+		Legs[i].V2 = 1500;
+		Legs[i].V3 = 1500;
+	}
+}
+
+void loop_timer_init()
+{
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM7, ENABLE);
+
+	TIM_TimeBaseInitTypeDef TIM_TimeBase_InitStructure;
+	TIM_TimeBase_InitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBase_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBase_InitStructure.TIM_Period = 19999;
+	TIM_TimeBase_InitStructure.TIM_Prescaler = (uint16_t) (SystemCoreClock / 2000000) - 1;
+	TIM_TimeBaseInit(TIM7, &TIM_TimeBase_InitStructure);
+	TIM_ITConfig(TIM7, TIM_IT_Update, ENABLE);
+
+	TIM_Cmd(TIM7, ENABLE);
+
+	NVIC_InitTypeDef NVIC_InitStructure;
+	NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+	NVIC_Init(&NVIC_InitStructure);
+}
+
+void leds_init()
+{
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+	GPIO_InitTypeDef GPIO_InitStructure;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Low_Speed;
+	GPIO_Init(GPIOD, &GPIO_InitStructure);
+}
+
 void spider_init()
 {
+	leds_init();
 	gpio_init();
 	tim_init();
+	legs_init();
+	loop_timer_init();
 }
