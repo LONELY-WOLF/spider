@@ -314,6 +314,58 @@ void leds_init()
 	GPIO_Init(GPIOD, &GPIO_InitStructure);
 }
 
+void usb_init()
+{
+	/*GPIO_InitTypeDef GPIO_InitStructure;
+
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE);
+
+	// Configure SOF VBUS ID DM DP Pins
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9 | GPIO_Pin_11 | GPIO_Pin_12;
+
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL ;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource9,GPIO_AF_OTG1_FS);
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource11,GPIO_AF_OTG1_FS);
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource12,GPIO_AF_OTG1_FS);
+
+	// this for ID line debug
+	GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_10;
+	GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+	GPIO_PinAFConfig(GPIOA,GPIO_PinSource10,GPIO_AF_OTG1_FS);
+
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+	RCC_AHB2PeriphClockCmd(RCC_AHB2Periph_OTG_FS, ENABLE);*/
+
+	//Timer init
+	NVIC_InitTypeDef NVIC_InitStructure;
+
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
+
+	TIM_TimeBaseInitTypeDef TIM_TimeBase_InitStructure;
+	TIM_TimeBase_InitStructure.TIM_ClockDivision = TIM_CKD_DIV1;
+	TIM_TimeBase_InitStructure.TIM_CounterMode = TIM_CounterMode_Up;
+	TIM_TimeBase_InitStructure.TIM_Period = 19999;
+	TIM_TimeBase_InitStructure.TIM_Prescaler = (uint16_t) (SystemCoreClock / 2000000) - 1;
+	TIM_TimeBaseInit(TIM6, &TIM_TimeBase_InitStructure);
+	TIM_ITConfig(TIM6, TIM_IT_Update, ENABLE);
+
+	//TIM_Cmd(TIM6, ENABLE);
+
+	NVIC_InitStructure.NVIC_IRQChannel = TIM6_DAC_IRQn;
+	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+	NVIC_Init(&NVIC_InitStructure);
+}
+
 void spider_init()
 {
 	leds_init();
@@ -321,4 +373,5 @@ void spider_init()
 	tim_init();
 	legs_init();
 	loop_timer_init();
+	usb_init();
 }
