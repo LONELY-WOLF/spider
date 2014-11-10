@@ -582,14 +582,14 @@ void  USR_GAMEPAD_Init (void)
 
 void  USR_GAMEPAD_ProcessData (HID_GAMEPAD_Data_TypeDef *data)
 {
-	STM_EVAL_LEDToggle(LED_Red);
-	if((data->data[5] & 0x0F) == 0x0F)
-	{
-		STM_EVAL_LEDOff(LED_Blue);
-	}
-	else if((data->data[5] & 0x0F) == 0x04)
+	//STM_EVAL_LEDToggle(LED_Red);
+	if(data->HatSwitch == Down)
 	{
 		STM_EVAL_LEDOn(LED_Blue);
+	}
+	else if(data->HatSwitch == None)
+	{
+		STM_EVAL_LEDOff(LED_Blue);
 	}
 }
 

@@ -5,6 +5,7 @@
 #include "usbh_core.h"
 #include "usbh_usr.h"
 #include "usbh_hid_core.h"
+#include "usbh_hid_gamepad.h"
 
 uint32_t data = 1500;
 uint32_t step = 10;
@@ -13,9 +14,11 @@ uint32_t step = 10;
 USB_OTG_CORE_HANDLE USB_OTG_Core_dev;
 USBH_HOST USB_Host;
 
-void Delay(__IO uint32_t nCount) {
-  while(nCount--) {
-  }
+void Delay(__IO uint32_t nCount)
+{
+	while (nCount--)
+	{
+	}
 }
 
 int main()
@@ -25,14 +28,12 @@ int main()
 
 	spider_init();
 
-	__IO uint32_t i = 0;
-
 	/*!< At this stage the microcontroller clock setting is already configured,
-	this is done through SystemInit() function which is called from startup
-	file (startup_stm32fxxx_xx.s) before to branch to application main.
-	To reconfigure the default setting of SystemInit() function, refer to
-	system_stm32fxxx.c file
-	*/
+	 this is done through SystemInit() function which is called from startup
+	 file (startup_stm32fxxx_xx.s) before to branch to application main.
+	 To reconfigure the default setting of SystemInit() function, refer to
+	 system_stm32fxxx.c file
+	 */
 
 	/* Init Host Library */
 	USBH_Init(&USB_OTG_Core_dev,
@@ -46,18 +47,46 @@ int main()
 
 	while (1)
 	{
-	/* Host Task handler */
-	USBH_Process(&USB_OTG_Core_dev , &USB_Host);
+		/* Host Task handler */
+		USBH_Process(&USB_OTG_Core_dev, &USB_Host);
 
-	if (i++ == 0x10000)
-	{
-	  i = 0;
-	}
+		if (LegsUpdated)
+		{
+			switch (HID_GAMEPAD_Data.HatSwitch)
+			{
+				case Left:
+				{
+					step = 10;
+					break;
+				}
+				case Right:
+				{
+					step = -10;
+					break;
+				}
+				default:
+				{
+					step = 0;
+					break;
+				}
+			}
+			if (step)
+			{
+				data += step;
+				if (data < 1200) data = 1200;
+				if (data > 1800) data = 1800;
+				for (int i = 0; i < 6; i++)
+				{
+					Legs[i].V2 = data;
+					Legs[i].V3 = data;
+				}
+				LegsUpdated = 0;
+			}
+		}
 	}
 
 	while (1)
 	{
-
 		GPIO_SetBits(GPIOD, GPIO_Pin_13);
 		Delay(10000000);
 		GPIO_ResetBits(GPIOD, GPIO_Pin_13);
@@ -68,22 +97,22 @@ int main()
 void TIM7_IRQHandler(void)
 {
 	/*cnt++;
-	if(cnt == 49)
-	{
-		GPIO_ToggleBits(GPIOD, GPIO_Pin_12);
-		cnt = 0;
-	}*/
+	 if(cnt == 49)
+	 {
+	 GPIO_ToggleBits(GPIOD, GPIO_Pin_12);
+	 cnt = 0;
+	 }*/
 	//GPIO_SetBits(GPIOD, GPIO_Pin_12);
 	if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET)
 	{
 		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
-		data += step;
-		for(int i = 0; i < 6; i++)
-		{
-			Legs[i].V2 = data;
-			Legs[i].V3 = data;
-		}
-		if((data < 1200) || (data > 1800)) step = -step;
+		/*data += step;
+		 for (int i = 0; i < 6; i++)
+		 {
+		 Legs[i].V2 = data;
+		 Legs[i].V3 = data;
+		 }
+		 if ((data < 1200) || (data > 1800)) step = -step;*/
 		updateLegs();
 	}
 	//TIM7->SR &= ~TIM_SR_UIF;

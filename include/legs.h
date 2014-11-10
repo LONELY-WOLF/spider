@@ -28,4 +28,6 @@ extern struct Leg Legs[6];
 extern void updateLegs();
 extern void updateServo(uint32_t pulse_us, struct ServoConf *conf);
 
+extern uint8_t LegsUpdated;
+
 #endif
