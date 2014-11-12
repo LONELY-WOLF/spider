@@ -23,6 +23,8 @@ void Delay(__IO uint32_t nCount)
 
 int main()
 {
+	int delta;
+
 	/*Обновляем значение переменной SystemCoreClock - системной тактовой частоты, понадобится при дальнейших вычислениях*/
 	SystemCoreClockUpdate();
 
@@ -34,6 +36,15 @@ int main()
 	 To reconfigure the default setting of SystemInit() function, refer to
 	 system_stm32fxxx.c file
 	 */
+	for (int i = 0; i < 5; i++)
+	{
+		HID_GAMEPAD_Data.Axis[i] = 127;
+	}
+	for (int i = 0; i < 12; i++)
+	{
+		HID_GAMEPAD_Data.Button[i] = 127;
+	}
+	HID_GAMEPAD_Data.HatSwitch = None;
 
 	/* Init Host Library */
 	USBH_Init(&USB_OTG_Core_dev,
@@ -52,36 +63,56 @@ int main()
 
 		if (LegsUpdated)
 		{
-			switch (HID_GAMEPAD_Data.HatSwitch)
+			/*switch (HID_GAMEPAD_Data.HatSwitch)
+			 {
+			 case Left:
+			 {
+			 step = 10;
+			 break;
+			 }
+			 case Right:
+			 {
+			 step = -10;
+			 break;
+			 }
+			 default:
+			 {
+			 step = 0;
+			 break;
+			 }
+			 }
+			 if (step)
+			 {
+			 data += step;
+			 if (data < 1200) data = 1200;
+			 if (data > 1800) data = 1800;
+			 for (int i = 0; i < 6; i++)
+			 {
+			 Legs[i].V2 = data;
+			 Legs[i].V3 = data;
+			 }
+			 LegsUpdated = 0;
+			 }*/
+			data = 1500 - ((HID_GAMEPAD_Data.Axis[3] - 127) * 1);
+			if (data < 1200) data = 1200;
+			if (data > 1800) data = 1800;
+			for (int i = 0; i < 6; i++)
 			{
-				case Left:
-				{
-					step = 10;
-					break;
-				}
-				case Right:
-				{
-					step = -10;
-					break;
-				}
-				default:
-				{
-					step = 0;
-					break;
-				}
+				Legs[i].V2 = data;
+				Legs[i].V3 = data;
 			}
-			if (step)
-			{
-				data += step;
-				if (data < 1200) data = 1200;
-				if (data > 1800) data = 1800;
-				for (int i = 0; i < 6; i++)
-				{
-					Legs[i].V2 = data;
-					Legs[i].V3 = data;
-				}
-				LegsUpdated = 0;
-			}
+			delta = ((HID_GAMEPAD_Data.Axis[4] - 127) * 2);
+			Legs[0].V2 += delta;
+			Legs[0].V3 += delta;
+			Legs[5].V2 -= delta;
+			Legs[5].V3 -= delta;
+
+			Legs[2].V2 -= delta;
+			Legs[2].V3 -= delta;
+			Legs[3].V2 += delta;
+			Legs[3].V3 += delta;
+
+			LegsUpdated = 0;
 		}
 	}
 

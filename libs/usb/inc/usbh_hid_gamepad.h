@@ -21,7 +21,7 @@ typedef enum HatSwitchPos
 typedef struct _HID_GAMEPAD_Data
 {
 	uint8_t data[9];
-	uint8_t Z, Rz, X, Y;
+	uint8_t Axis[5];
 	enum HatSwitchPos HatSwitch;
 	uint8_t Button[12];
 }

@@ -36,7 +36,7 @@
 #include "usbh_ioreq.h"
 #include "usbh_hcs.h"
 
-#define HID_MIN_POLL          10
+#define HID_MIN_POLL          20
 
 /* States for HID State Machine */
 typedef enum

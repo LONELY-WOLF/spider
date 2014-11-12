@@ -69,22 +69,23 @@ static void GAMEPAD_Decode(uint8_t *data)
 		HID_GAMEPAD_Data.data[i] = data[i];
 	}
 	HID_GAMEPAD_Data.HatSwitch = (data[5] & 0x0F);
-	HID_GAMEPAD_Data.Z = data[0];
-	HID_GAMEPAD_Data.Rz = data[2];
-	HID_GAMEPAD_Data.X = data[3];
-	HID_GAMEPAD_Data.Y = data[4];
-	HID_GAMEPAD_Data.Button[0] = (data[5] & 0x80) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[1] = (data[5] & 0x40) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[2] = (data[5] & 0x20) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[3] = (data[5] & 0x10) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[4] = (data[6] & 0x80) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[5] = (data[6] & 0x40) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[6] = (data[6] & 0x20) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[7] = (data[6] & 0x10) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[8] = (data[6] & 0x08) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[9] = (data[6] & 0x04) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[10] = (data[6] & 0x02) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[11] = (data[6] & 0x01) ? 1 : 0;
+	HID_GAMEPAD_Data.Axis[0] = data[0];
+	HID_GAMEPAD_Data.Axis[1] = data[1];
+	HID_GAMEPAD_Data.Axis[2] = data[2];
+	HID_GAMEPAD_Data.Axis[3] = data[3];
+	HID_GAMEPAD_Data.Axis[4] = data[4];
+	HID_GAMEPAD_Data.Button[0] = (data[5] & 0x10) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[1] = (data[5] & 0x20) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[2] = (data[5] & 0x30) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[3] = (data[5] & 0x40) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[4] = (data[6] & 0x01) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[5] = (data[6] & 0x02) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[6] = (data[6] & 0x04) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[7] = (data[6] & 0x08) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[8] = (data[6] & 0x10) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[9] = (data[6] & 0x20) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[10] = (data[6] & 0x40) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[11] = (data[6] & 0x80) ? 1 : 0;
 
 	USR_GAMEPAD_ProcessData(&HID_GAMEPAD_Data);
 }
