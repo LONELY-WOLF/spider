@@ -6,6 +6,7 @@
 #include "usbh_usr.h"
 #include "usbh_hid_core.h"
 #include "usbh_hid_gamepad.h"
+#include "walk_legacy.h"
 
 uint32_t data = 1500;
 uint32_t step = 10;
@@ -56,6 +57,8 @@ int main()
 	/* Initialize User Button */
 	STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_GPIO);
 
+	Init_Work();
+
 	while (1)
 	{
 		/* Host Task handler */
@@ -63,27 +66,48 @@ int main()
 
 		if (LegsUpdated)
 		{
-			/*switch (HID_GAMEPAD_Data.HatSwitch)
-			 {
-			 case Left:
-			 {
-			 step = 10;
-			 break;
-			 }
-			 case Right:
-			 {
-			 step = -10;
-			 break;
-			 }
-			 default:
-			 {
-			 step = 0;
-			 break;
-			 }
-			 }
-			 if (step)
-			 {
-			 data += step;
+			switch (HID_GAMEPAD_Data.HatSwitch)
+			{
+				case Up:
+				{
+					Now_Route = 1;
+					break;
+				}
+				case Right:
+				{
+					Now_Route = 3;
+					break;
+				}
+				case Down:
+				{
+					Now_Route = 2;
+					break;
+				}
+				case Left:
+				{
+					Now_Route = 4;
+					break;
+				}
+				default:
+				{
+					Now_Route = 0;
+					break;
+				}
+			}
+			Step();
+			/*if (step)
+			{
+				data += step;
+				if (data < 1200) data = 1200;
+				if (data > 1800) data = 1800;
+				for (int i = 0; i < 6; i++)
+				{
+					Legs[i].V2 = data;
+					Legs[i].V3 = data;
+				}
+				LegsUpdated = 0;
+			}*/
+			/*data = 1500 - ((HID_GAMEPAD_Data.Axis[3] - 127) * 1);
 			 if (data < 1200) data = 1200;
 			 if (data > 1800) data = 1800;
 			 for (int i = 0; i < 6; i++)
@@ -91,26 +115,16 @@ int main()
 			 Legs[i].V2 = data;
 			 Legs[i].V3 = data;
 			 }
-			 LegsUpdated = 0;
-			 }*/
-			data = 1500 - ((HID_GAMEPAD_Data.Axis[3] - 127) * 1);
-			if (data < 1200) data = 1200;
-			if (data > 1800) data = 1800;
-			for (int i = 0; i < 6; i++)
-			{
-				Legs[i].V2 = data;
-				Legs[i].V3 = data;
-			}
-			delta = ((HID_GAMEPAD_Data.Axis[4] - 127) * 2);
-			Legs[0].V2 += delta;
-			Legs[0].V3 += delta;
-			Legs[5].V2 -= delta;
-			Legs[5].V3 -= delta;
+			 delta = ((HID_GAMEPAD_Data.Axis[4] - 127) * 2);
+			 Legs[0].V2 += delta;
+			 Legs[0].V3 += delta;
+			 Legs[5].V2 -= delta;
+			 Legs[5].V3 -= delta;
 
-			Legs[2].V2 -= delta;
-			Legs[2].V3 -= delta;
-			Legs[3].V2 += delta;
-			Legs[3].V3 += delta;
+			 Legs[2].V2 -= delta;
+			 Legs[2].V3 -= delta;
+			 Legs[3].V2 += delta;
+			 Legs[3].V3 += delta;*/
 
 			LegsUpdated = 0;
 		}
@@ -125,26 +139,3 @@ int main()
 	}
 }
 
-void TIM7_IRQHandler(void)
-{
-	/*cnt++;
-	 if(cnt == 49)
-	 {
-	 GPIO_ToggleBits(GPIOD, GPIO_Pin_12);
-	 cnt = 0;
-	 }*/
-	//GPIO_SetBits(GPIOD, GPIO_Pin_12);
-	if (TIM_GetITStatus(TIM7, TIM_IT_Update) != RESET)
-	{
-		TIM_ClearITPendingBit(TIM7, TIM_IT_Update);
-		/*data += step;
-		 for (int i = 0; i < 6; i++)
-		 {
-		 Legs[i].V2 = data;
-		 Legs[i].V3 = data;
-		 }
-		 if ((data < 1200) || (data > 1800)) step = -step;*/
-		updateLegs();
-	}
-	//TIM7->SR &= ~TIM_SR_UIF;
-}
