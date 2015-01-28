@@ -7,6 +7,8 @@
 #include "usbh_hid_core.h"
 #include "usbh_hid_gamepad.h"
 #include "walk_legacy.h"
+#include "walk_math.h"
+#include <math.h>
 
 uint32_t data = 1500;
 uint32_t step = 10;
@@ -57,7 +59,7 @@ int main()
 	/* Initialize User Button */
 	STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_GPIO);
 
-	Init_Work();
+	//Init_Work();
 
 	while (1)
 	{
@@ -95,6 +97,10 @@ int main()
 				}
 			}
 			Step();
+
+			//SetLegPos(LEG_L2, 0, 150, 120);
+			//updateServo(RadToPulse(M_PI_4), &Legs[LEG_L2].H1Conf);
+
 			/*if (step)
 			{
 				data += step;

@@ -261,6 +261,7 @@ void legs_init()
 	//V3
 	Legs[LEG_L2].V3Conf.TIM = TIM1;
 	Legs[LEG_L2].V3Conf.OC = 2;
+	Legs[LEG_L2].V3Conf.Reversed = 1;
 	//L3
 	//H1
 	Legs[LEG_L3].H1Conf.TIM = TIM1;
@@ -366,6 +367,46 @@ void usb_init()
 	NVIC_Init(&NVIC_InitStructure);
 }
 
+void uart_init()
+{
+	RCC_APB1PeriphClockCmd(RCC_APB1Periph_UART4, ENABLE);
+
+	//USARTx_CLK_INIT(UART4_CLK, ENABLE);
+
+	GPIO_PinAFConfig(GPIOC, GPIO_Pin_10 | GPIO_Pin_11, GPIO_AF_UART4);
+
+	GPIO_InitTypeDef GPIO_InitStructure;
+	//TX
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+	//RX
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+	GPIO_Init(GPIOC, &GPIO_InitStructure);
+
+	USART_InitTypeDef USART_InitStructure;
+	USART_InitStructure.USART_BaudRate            = 57600;
+	USART_InitStructure.USART_WordLength          = USART_WordLength_8b;
+	USART_InitStructure.USART_StopBits            = USART_StopBits_1;
+	USART_InitStructure.USART_Parity              = USART_Parity_No;
+	USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+	USART_InitStructure.USART_Mode                = USART_Mode_Rx;
+	USART_Init(UART4, &USART_InitStructure);
+
+    //NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+
+    /*NVIC_InitTypeDef NVIC_InitStructure;
+    NVIC_InitStructure.NVIC_IRQChannel = UART4_IRQn;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);*/
+    NVIC_EnableIRQ(UART4_IRQn);
+
+	USART_ITConfig(UART4, USART_IT_RXNE, ENABLE);
+	USART_Cmd(UART4, ENABLE);
+}
+
 void spider_init()
 {
 	leds_init();
@@ -374,4 +415,5 @@ void spider_init()
 	legs_init();
 	loop_timer_init();
 	usb_init();
+	uart_init();
 }

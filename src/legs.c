@@ -5,7 +5,7 @@ uint8_t LegsUpdated = 0;
 
 void updateServo(uint32_t pulse_us, struct ServoConf *conf)
 {
-	if ((pulse_us < 700) || (pulse_us > 2300)) return;
+	if ((pulse_us < 500) || (pulse_us > 2500)) return;
 	switch (conf->OC)
 	{
 		case 1:

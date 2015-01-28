@@ -15,6 +15,7 @@ struct ServoConf
 {
 	int OC;
 	TIM_TypeDef *TIM;
+	int Reversed;
 };
 
 struct Leg
