@@ -32,6 +32,19 @@ int main()
 	SystemCoreClockUpdate();
 
 	spider_init();
+    /* Configure the LEDs */
+    STM_EVAL_LEDInit(LED_Green);
+    STM_EVAL_LEDInit(LED_Orange);
+    STM_EVAL_LEDInit(LED_Red);
+    STM_EVAL_LEDInit(LED_Blue);
+
+
+    STM_EVAL_LEDOn(LED_Orange);
+
+    /*STM_EVAL_LEDOn(LED_Green);
+    STM_EVAL_LEDOn(LED_Orange);
+    STM_EVAL_LEDOn(LED_Red);
+    STM_EVAL_LEDOn(LED_Blue);*/
 
 	/*!< At this stage the microcontroller clock setting is already configured,
 	 this is done through SystemInit() function which is called from startup
@@ -50,20 +63,12 @@ int main()
 	HID_GAMEPAD_Data.HatSwitch = None;
 
 	/* Init Host Library */
-	USBH_Init(&USB_OTG_Core_dev,
-			USB_OTG_FS_CORE_ID,
-			&USB_Host,
-			&HID_cb,
-			&USR_Callbacks);
+	USBH_Init(&USB_OTG_Core_dev, USB_OTG_FS_CORE_ID, &USB_Host, &HID_cb, &USR_Callbacks);
 
-	/* Initialize User Button */
-	STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_GPIO);
+	Init_Work();
 
-	//Init_Work();
-
-	while (1)
+	/*while (1)
 	{
-		/* Host Task handler */
 		USBH_Process(&USB_OTG_Core_dev, &USB_Host);
 
 		if (LegsUpdated)
@@ -82,6 +87,7 @@ int main()
 				}
 				case Down:
 				{
+					STM_EVAL_LEDOn(LED_Blue);
 					Now_Route = 2;
 					break;
 				}
@@ -92,6 +98,7 @@ int main()
 				}
 				default:
 				{
+					STM_EVAL_LEDOff(LED_Blue);
 					Now_Route = 0;
 					break;
 				}
@@ -101,47 +108,17 @@ int main()
 			//SetLegPos(LEG_L2, 0, 150, 120);
 			//updateServo(RadToPulse(M_PI_4), &Legs[LEG_L2].H1Conf);
 
-			/*if (step)
-			{
-				data += step;
-				if (data < 1200) data = 1200;
-				if (data > 1800) data = 1800;
-				for (int i = 0; i < 6; i++)
-				{
-					Legs[i].V2 = data;
-					Legs[i].V3 = data;
-				}
-				LegsUpdated = 0;
-			}*/
-			/*data = 1500 - ((HID_GAMEPAD_Data.Axis[3] - 127) * 1);
-			 if (data < 1200) data = 1200;
-			 if (data > 1800) data = 1800;
-			 for (int i = 0; i < 6; i++)
-			 {
-			 Legs[i].V2 = data;
-			 Legs[i].V3 = data;
-			 }
-			 delta = ((HID_GAMEPAD_Data.Axis[4] - 127) * 2);
-			 Legs[0].V2 += delta;
-			 Legs[0].V3 += delta;
-			 Legs[5].V2 -= delta;
-			 Legs[5].V3 -= delta;
-
-			 Legs[2].V2 -= delta;
-			 Legs[2].V3 -= delta;
-			 Legs[3].V2 += delta;
-			 Legs[3].V3 += delta;*/
-
 			LegsUpdated = 0;
 		}
-	}
+	}*/
 
 	while (1)
 	{
-		GPIO_SetBits(GPIOD, GPIO_Pin_13);
-		Delay(10000000);
-		GPIO_ResetBits(GPIOD, GPIO_Pin_13);
-		Delay(10000000);
+		if(LegsUpdated)
+		{
+			Step();
+			LegsUpdated = 0;
+		}
 	}
 }
 

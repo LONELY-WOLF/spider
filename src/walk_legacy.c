@@ -10,6 +10,8 @@
 #include "legs.h"
 #include "walk_legacy.h"
 
+int Watch_Dog = 0;
+
 uint8_t Route  = 0;
 
 uint8_t Now_Route = 0;
@@ -169,6 +171,11 @@ uint16_t Full_Stop_All_Legs[] = {1500};
 
 uint16_t	Count = 0;
 
+void SetRoute(uint8_t route)
+{
+	Now_Route = route;
+	Watch_Dog = 0;
+}
 
 void Init_Work()
 {
@@ -309,6 +316,10 @@ void Step_Begin()
 
 void Step_Walk()
 {
+	if((Watch_Dog++) > 5) //5 steps without update
+	{
+		Now_Route = 0;
+	}
 	if (Route != Now_Route)
 	{
 		WalkManager = Step_End;

@@ -101,10 +101,10 @@ void USBH_Init(USB_OTG_CORE_HANDLE *pdev,
 {
      
   /* Hardware Init */
-  USB_OTG_BSP_Init(pdev);  
+  USB_OTG_BSP_Init(pdev);
   
   /* configure GPIO pin used for switching VBUS power */
-  USB_OTG_BSP_ConfigVBUS(0);  
+  USB_OTG_BSP_ConfigVBUS(0);
   
   
   /* Host de-initializations */
@@ -112,10 +112,10 @@ void USBH_Init(USB_OTG_CORE_HANDLE *pdev,
   
   /*Register class and user callbacks */
   phost->class_cb = class_cb;
-  phost->usr_cb = usr_cb;  
+  phost->usr_cb = usr_cb;
     
   /* Start the USB OTG core */     
-   HCD_Init(pdev , coreID);
+  HCD_Init(pdev , coreID);
    
   /* Upon Init call usr call back */
   phost->usr_cb->Init();

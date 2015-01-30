@@ -67,7 +67,7 @@ ErrorStatus HSEStartUpStatus;
 void BSP_Init(void)
 {
   /* Configure PA0 pin: User Key pin */
-  STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_GPIO);
+  //STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_GPIO);
 }
 
 
@@ -221,14 +221,14 @@ static void USB_OTG_BSP_TimeInit (void)
   NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 
   /* Enable the TIM2 gloabal Interrupt */
-  NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannel = TIM6_DAC_IRQn;
   NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 
   NVIC_Init(&NVIC_InitStructure);
 
-  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM2, ENABLE);
+  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM6, ENABLE);
 #endif
 }
 

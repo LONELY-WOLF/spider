@@ -106,18 +106,8 @@ void USBH_USR_Init(void)
   if(startup == 0 )
   {
     startup = 1;
-    /* Configure the LEDs */
-    STM_EVAL_LEDInit(LED_Green);
-    STM_EVAL_LEDInit(LED_Orange);
-    STM_EVAL_LEDInit(LED_Red); 
-    STM_EVAL_LEDInit(LED_Blue); 
     
-    STM_EVAL_LEDOn(LED_Green);
-    STM_EVAL_LEDOn(LED_Orange);
-    STM_EVAL_LEDOn(LED_Red);
-    STM_EVAL_LEDOn(LED_Blue);
-    
-    STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_GPIO);
+    //STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_GPIO);
 /*    
 #if defined (USE_STM322xG_EVAL)
   STM322xG_LCD_Init();

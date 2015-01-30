@@ -15,6 +15,7 @@ extern void (*WalkManager)();
 
 void Step();
 void Init_Work();
+void SetRoute(uint8_t route);
 
 //extern struct Leg;
 
