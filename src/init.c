@@ -1,6 +1,19 @@
 #include "stm32f4xx.h"
 #include "legs.h"
 
+void wait_servo_ticks(int servo_ticks)
+{
+	int cnt = 0;
+	while(cnt < servo_ticks)
+	{
+		if(LegsUpdated)
+		{
+			cnt++;
+			LegsUpdated = 0;
+		}
+	}
+}
+
 void gpio_init()
 {
 	GPIO_InitTypeDef GPIO_InitStructure;
@@ -92,7 +105,7 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OCInitStructure.TIM_OCIdleState = TIM_OCIdleState_Reset;
-	TIM_OCInitStructure.TIM_Pulse = 1500;
+	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OC1Init(TIM1, &TIM_OCInitStructure);
 	TIM_OC2Init(TIM1, &TIM_OCInitStructure);
 	TIM_OC3Init(TIM1, &TIM_OCInitStructure);
@@ -115,7 +128,7 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OCInitStructure.TIM_Pulse = 1500;
+	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OC1Init(TIM2, &TIM_OCInitStructure);
 	TIM_OC2Init(TIM2, &TIM_OCInitStructure);
 	TIM_OC3Init(TIM2, &TIM_OCInitStructure);
@@ -138,7 +151,7 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OCInitStructure.TIM_Pulse = 1500;
+	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OC1Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC2Init(TIM3, &TIM_OCInitStructure);
 	TIM_OC3Init(TIM3, &TIM_OCInitStructure);
@@ -161,7 +174,7 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OCInitStructure.TIM_Pulse = 1500;
+	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC3Init(TIM4, &TIM_OCInitStructure);
 	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Enable);
@@ -180,7 +193,7 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OCInitStructure.TIM_Pulse = 1500;
+	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OC1Init(TIM9, &TIM_OCInitStructure);
 	TIM_OC2Init(TIM9, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM9, TIM_OCPreload_Enable);
@@ -199,7 +212,7 @@ void tim_init()
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
-	TIM_OCInitStructure.TIM_Pulse = 1500;
+	TIM_OCInitStructure.TIM_Pulse = 0;
 	TIM_OC1Init(TIM12, &TIM_OCInitStructure);
 	TIM_OC2Init(TIM12, &TIM_OCInitStructure);
 	TIM_OC1PreloadConfig(TIM12, TIM_OCPreload_Enable);
@@ -273,11 +286,24 @@ void legs_init()
 	Legs[LEG_L3].V3Conf.TIM = TIM12;
 	Legs[LEG_L3].V3Conf.OC = 2;
 
+	//Move horizontal motors
 	for (int i = 0; i < 6; i++)
 	{
 		Legs[i].H1 = 1500;
-		Legs[i].V2 = 1500;
+		Legs[i].V2 = 0;
+		Legs[i].V3 = 0;
+	}
+	//Wait and move last (vertical) motors
+	//wait_servo_ticks(20);
+	for (int i = 0; i < 6; i++)
+	{
 		Legs[i].V3 = 1500;
+	}
+	//Wait and move central (vertical) motors
+	wait_servo_ticks(20);
+	for (int i = 0; i < 6; i++)
+	{
+		Legs[i].V2 = 1500;
 	}
 }
 
@@ -414,8 +440,8 @@ void spider_init()
 	leds_init();
 	gpio_init();
 	tim_init();
-	legs_init();
 	loop_timer_init();
+	legs_init();
 	usb_init();
 	uart_init();
 }
