@@ -1,0 +1,2 @@
+flash:
+	stm32flash -w spider.bin -b 576000 /dev/ttyUSB2
