@@ -87,7 +87,6 @@ int main()
 				}
 				case Down:
 				{
-					STM_EVAL_LEDOn(LED_Blue);
 					SetRoute(2);
 					break;
 				}
@@ -98,7 +97,6 @@ int main()
 				}
 				default:
 				{
-					STM_EVAL_LEDOff(LED_Blue);
 					SetRoute(0);
 					break;
 				}

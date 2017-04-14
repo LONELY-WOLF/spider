@@ -5,9 +5,7 @@ Firmware for hexapod robot based on STM32F4 (STM32F4DISCOVERY board)
 
 ### Input
 * USB gamepad.
-
-:heavy_exclamation_mark: `WARNING! Status packet structure is hardcoded.`
-* External commands from USART4. *Under development* You can implement your own protocol. Works great for HC-05 + smartphone.
+* External commands from USART4. *Under development!* You can implement your own protocol. Works great for HC-05 + smartphone.
 
 ### Motor control
 * Legacy control via precalculated tables. This part was ported from old AVR firmware. Stable. Main type of control for now.

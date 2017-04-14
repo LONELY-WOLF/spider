@@ -59,6 +59,7 @@ static USBH_Status USBH_HID_InterfaceInit  (USB_OTG_CORE_HANDLE *pdev ,
                                             void *phost);
 
 static void  USBH_ParseHIDDesc (USBH_HIDDesc_TypeDef *desc, uint8_t *buf);
+void USBH_ParseRepDesc(HID_GAMEPAD_DataDesc_TypeDef *desc, uint8_t *buf, uint16_t len);
 
 static void USBH_HID_InterfaceDeInit  (USB_OTG_CORE_HANDLE *pdev , 
                                        void *phost);
@@ -261,6 +262,7 @@ static USBH_Status USBH_HID_ClassRequest(USB_OTG_CORE_HANDLE *pdev ,
     /* Get Report Desc */ 
     if (USBH_Get_HID_ReportDescriptor(pdev , pphost, HID_Desc.wItemLength) == USBH_OK)
     {
+    	USBH_ParseRepDesc(&HID_GAMEPAD_DataDesc, pdev->host.Rx_Buffer, HID_Desc.wItemLength);
       HID_Machine.ctl_state = HID_REQ_SET_IDLE;
     }
     
@@ -554,3 +556,98 @@ static void  USBH_ParseHIDDesc (USBH_HIDDesc_TypeDef *desc, uint8_t *buf)
   desc->wItemLength              =  LE16  (buf + 7);
   
 }
+
+void USBH_ParseRepDesc(HID_GAMEPAD_DataDesc_TypeDef *desc, uint8_t *buf, uint16_t len)
+{
+	STM_EVAL_LEDOff(LED_Red);
+	uint8_t type = 0, size = 0, offset = 0, count = 0;
+	desc->AxisCnt = 0;
+	desc->ButtonCnt = 0;
+	desc->HatCnt = 0;
+	for(int i=0; i<len; i++)
+	{
+		uint8_t tag = buf[i];
+		int tsize = tag & 0x03;
+		if(tsize == 0x03) tsize = 0x04;
+		switch(tag)
+		{
+			case 0x09: //Usage
+			{
+				switch(buf[i+1])
+				{
+					case 0x30:
+					case 0x31:
+					case 0x32:
+					case 0x33:
+					case 0x34:
+					case 0x35:
+					{
+						type = 0x30;
+						break;
+					}
+					case 0x39:
+					{
+						type = 0x39;
+						break;
+					}
+					default:
+					{
+						type = 0x00;
+						break;
+					}
+				}
+				break;
+			}
+			case 0x05: //Usage Page
+			{
+				if(buf[i + 1] == 0x09) //Button
+				{
+					type = 0x09;
+				}
+				else
+				{
+					type = 0x00;
+				}
+				break;
+			}
+			case 0x75: //Report Size
+			{
+				size = buf[i + 1];
+				break;
+			}
+			case 0x95: //Report Count
+			{
+				count = buf[i + 1];
+				break;
+			}
+			case 0x81: //Input
+			{
+				if((buf[i + 1] & 0x1) == 0) //Data
+				{
+					if(type && size && count)
+					{
+						if(type == 0x30)
+						{
+							desc->AxisPtr = offset;
+							desc->AxisCnt = count;
+						}
+						if(type == 0x39)
+						{
+							desc->HatPtr = offset;
+							desc->HatCnt = count;
+						}
+						if(type == 0x09)
+						{
+							desc->ButtonPtr = offset;
+							desc->ButtonCnt = count;
+						}
+					}
+				}
+				offset += size * count;
+				break;
+			}
+		}
+		i += tsize;
+	}
+}
+

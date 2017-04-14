@@ -38,6 +38,7 @@ static void GAMEPAD_Decode(uint8_t *data);
 /////////////////////////////////    
 
 HID_GAMEPAD_Data_TypeDef HID_GAMEPAD_Data;
+HID_GAMEPAD_DataDesc_TypeDef HID_GAMEPAD_DataDesc;
 HID_cb_TypeDef HID_GAMEPAD_cb =
 		{
 				GAMEPAD_Init,
@@ -64,11 +65,25 @@ static void GAMEPAD_Init(void)
  */
 static void GAMEPAD_Decode(uint8_t *data)
 {
-	for (int i = 0; i < 8; i++)
+	int ptr = 0;
+	//Assume data is byte aligned
+	ptr = HID_GAMEPAD_DataDesc.AxisPtr >> 3;
+	for(int i = 0; i < HID_GAMEPAD_DataDesc.AxisCnt; i++)
 	{
-		HID_GAMEPAD_Data.data[i] = data[i];
+		HID_GAMEPAD_Data.Axis[i] = data[ptr + i];
 	}
-	HID_GAMEPAD_Data.HatSwitch = (data[5] & 0x0F);
+	for(int i = 0; i < HID_GAMEPAD_DataDesc.ButtonCnt; i++)
+	{
+		ptr = HID_GAMEPAD_DataDesc.ButtonPtr + i;
+		HID_GAMEPAD_Data.Button[i] = (data[ptr >> 3] >> (ptr & 0x7)) & 1;
+	}
+	if(HID_GAMEPAD_DataDesc.HatCnt)
+	{
+		ptr = HID_GAMEPAD_DataDesc.HatPtr;
+		HID_GAMEPAD_Data.HatSwitch = data[ptr >> 3] >> (ptr & 0x7);
+	}
+
+	/*HID_GAMEPAD_Data.HatSwitch = (data[5] & 0x0F);
 	HID_GAMEPAD_Data.Axis[0] = data[0];
 	HID_GAMEPAD_Data.Axis[1] = data[1];
 	HID_GAMEPAD_Data.Axis[2] = data[2];
@@ -85,7 +100,7 @@ static void GAMEPAD_Decode(uint8_t *data)
 	HID_GAMEPAD_Data.Button[8] = (data[6] & 0x10) ? 1 : 0;
 	HID_GAMEPAD_Data.Button[9] = (data[6] & 0x20) ? 1 : 0;
 	HID_GAMEPAD_Data.Button[10] = (data[6] & 0x40) ? 1 : 0;
-	HID_GAMEPAD_Data.Button[11] = (data[6] & 0x80) ? 1 : 0;
+	HID_GAMEPAD_Data.Button[11] = (data[6] & 0x80) ? 1 : 0;*/
 
 	USR_GAMEPAD_ProcessData(&HID_GAMEPAD_Data);
 }
