@@ -77,29 +77,29 @@ int main()
 			{
 				case Up:
 				{
-					Now_Route = 1;
+					SetRoute(1);
 					break;
 				}
 				case Right:
 				{
-					Now_Route = 3;
+					SetRoute(3);
 					break;
 				}
 				case Down:
 				{
 					STM_EVAL_LEDOn(LED_Blue);
-					Now_Route = 2;
+					SetRoute(2);
 					break;
 				}
 				case Left:
 				{
-					Now_Route = 4;
+					SetRoute(4);
 					break;
 				}
 				default:
 				{
 					STM_EVAL_LEDOff(LED_Blue);
-					Now_Route = 0;
+					SetRoute(0);
 					break;
 				}
 			}
