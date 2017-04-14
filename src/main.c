@@ -67,7 +67,7 @@ int main()
 
 	Init_Work();
 
-	/*while (1)
+	while (1)
 	{
 		USBH_Process(&USB_OTG_Core_dev, &USB_Host);
 
@@ -110,15 +110,15 @@ int main()
 
 			LegsUpdated = 0;
 		}
-	}*/
+	}
 
-	while (1)
+	/*while (1)
 	{
 		if(LegsUpdated)
 		{
 			Step();
 			LegsUpdated = 0;
 		}
-	}
+	}*/
 }
 
