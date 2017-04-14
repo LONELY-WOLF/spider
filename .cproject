@@ -52,11 +52,11 @@
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.250902168" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor.1861324661" name="Use preprocessor" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.59078133" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/usb/inc"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/include"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/CMSIS/include"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/StdPeriph/include"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/misc/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/CMSIS/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/misc/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/StdPeriph/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/usb/inc}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs.1801302677" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="STM32F40_41xxx"/>
@@ -69,11 +69,11 @@
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.400457561" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.1657283927" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/include"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/usb/inc"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/CMSIS/include"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/StdPeriph/include"/>
-									<listOptionValue builtIn="false" value="/home/wolf/workspace/spider/libs/misc/include"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/CMSIS/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/misc/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/StdPeriph/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/usb/inc}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.1754980438" name="Language standard" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std" useByScannerDiscovery="true" value="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.gnu11" valueType="enumerated"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.2098501843" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -166,7 +166,7 @@
 				</extensions>
 			</storageModule>
 			<storageModule moduleId="cdtBuildSystem" version="4.0.0">
-				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release,org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe" cleanCommand="${cross_rm} -rf" description="" id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.1366474904" name="Release" parent="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release">
+				<configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.release" cleanCommand="${cross_rm} -rf" description="" id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.1366474904" name="Release" parent="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release">
 					<folderInfo id="ilg.gnuarmeclipse.managedbuild.cross.config.elf.release.1366474904." name="/" resourcePath="">
 						<toolChain id="ilg.gnuarmeclipse.managedbuild.cross.toolchain.elf.release.390849091" name="Cross ARM GCC" superClass="ilg.gnuarmeclipse.managedbuild.cross.toolchain.elf.release">
 							<option id="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.level.667184558" name="Optimization Level" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.level" value="ilg.gnuarmeclipse.managedbuild.cross.option.optimization.level.size" valueType="enumerated"/>
@@ -199,10 +199,11 @@
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler.673481086" name="Cross ARM GNU Assembler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.assembler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor.1108219614" name="Use preprocessor" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.usepreprocessor" value="true" valueType="boolean"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths.869641454" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.include.paths" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;../include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../libs/CMSIS/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../libs/StdPeriph/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../libs/misc/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/CMSIS/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/misc/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/StdPeriph/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/usb/inc}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs.487917222" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.assembler.defs" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="STM32F40_41xxx"/>
@@ -213,10 +214,11 @@
 							</tool>
 							<tool id="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.33598218" name="Cross ARM C Compiler" superClass="ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler">
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths.1002197165" name="Include paths (-I)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.include.paths" useByScannerDiscovery="false" valueType="includePath">
-									<listOptionValue builtIn="false" value="&quot;../include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../libs/CMSIS/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../libs/StdPeriph/include&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;../libs/misc/include&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/CMSIS/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/misc/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/StdPeriph/include}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/spider/libs/usb/inc}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.1502890530" name="Language standard" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std" useByScannerDiscovery="true" value="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.gnu11" valueType="enumerated"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.1771443035" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -305,10 +307,10 @@
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="refreshScope" versionNumber="2">
-		<configuration configurationName="Release">
+		<configuration configurationName="Debug">
 			<resource resourceType="PROJECT" workspacePath="/spider"/>
 		</configuration>
-		<configuration configurationName="Debug">
+		<configuration configurationName="Release">
 			<resource resourceType="PROJECT" workspacePath="/spider"/>
 		</configuration>
 	</storageModule>
