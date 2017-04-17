@@ -7,15 +7,7 @@
 
 enum HatSwitchPos
 {
-	Up = 0,
-	UpRight,
-	Right,
-	DownRight,
-	Down,
-	DownLeft,
-	Left,
-	UpLeft,
-	None = 0x0F
+	Up = 0, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft, None = 0x0F
 };
 
 typedef struct _HID_GAMEPAD_Data
@@ -23,8 +15,7 @@ typedef struct _HID_GAMEPAD_Data
 	uint8_t Axis[8];
 	enum HatSwitchPos HatSwitch;
 	uint8_t Button[32];
-}
-HID_GAMEPAD_Data_TypeDef;
+} HID_GAMEPAD_Data_TypeDef;
 
 typedef struct _HID_GAMEPAD_DataDesc
 {
@@ -34,8 +25,7 @@ typedef struct _HID_GAMEPAD_DataDesc
 	int ButtonCnt;
 	int HatPtr;
 	int HatCnt;
-}
-HID_GAMEPAD_DataDesc_TypeDef;
+} HID_GAMEPAD_DataDesc_TypeDef;
 
 extern HID_cb_TypeDef HID_GAMEPAD_cb;
 extern HID_GAMEPAD_Data_TypeDef HID_GAMEPAD_Data;

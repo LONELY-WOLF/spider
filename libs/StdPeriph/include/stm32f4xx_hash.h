@@ -1,99 +1,100 @@
 /**
-  ******************************************************************************
-  * @file    stm32f4xx_hash.h
-  * @author  MCD Application Team
-  * @version V1.3.0
-  * @date    08-November-2013
-  * @brief   This file contains all the functions prototypes for the HASH 
-  *          firmware library.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    stm32f4xx_hash.h
+ * @author  MCD Application Team
+ * @version V1.3.0
+ * @date    08-November-2013
+ * @brief   This file contains all the functions prototypes for the HASH 
+ *          firmware library.
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
+ *
+ * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *        http://www.st.com/software_license_agreement_liberty_v2
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4xx_HASH_H
 #define __STM32F4xx_HASH_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{	
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @addtogroup HASH
-  * @{
-  */ 
+ * @{
+ */
 
 /* Exported types ------------------------------------------------------------*/
 
 /** 
-  * @brief   HASH Init structure definition
-  */ 
+ * @brief   HASH Init structure definition
+ */
 typedef struct
 {
-  uint32_t HASH_AlgoSelection; /*!< SHA-1, SHA-224, SHA-256 or MD5. This parameter
-                                    can be a value of @ref HASH_Algo_Selection */
-  uint32_t HASH_AlgoMode;      /*!< HASH or HMAC. This parameter can be a value 
-                                    of @ref HASH_processor_Algorithm_Mode */
-  uint32_t HASH_DataType;      /*!< 32-bit data, 16-bit data, 8-bit data or 
-                                    bit string. This parameter can be a value of
-                                    @ref HASH_Data_Type */
-  uint32_t HASH_HMACKeyType;   /*!< HMAC Short key or HMAC Long Key. This parameter
-                                    can be a value of @ref HASH_HMAC_Long_key_only_for_HMAC_mode */
-}HASH_InitTypeDef;
+	uint32_t HASH_AlgoSelection; /*!< SHA-1, SHA-224, SHA-256 or MD5. This parameter
+	 can be a value of @ref HASH_Algo_Selection */
+	uint32_t HASH_AlgoMode; /*!< HASH or HMAC. This parameter can be a value 
+	 of @ref HASH_processor_Algorithm_Mode */
+	uint32_t HASH_DataType; /*!< 32-bit data, 16-bit data, 8-bit data or 
+	 bit string. This parameter can be a value of
+	 @ref HASH_Data_Type */
+	uint32_t HASH_HMACKeyType; /*!< HMAC Short key or HMAC Long Key. This parameter
+	 can be a value of @ref HASH_HMAC_Long_key_only_for_HMAC_mode */
+} HASH_InitTypeDef;
 
 /** 
-  * @brief  HASH message digest result structure definition  
-  */ 
+ * @brief  HASH message digest result structure definition  
+ */
 typedef struct
 {
-  uint32_t Data[8];      /*!< Message digest result : 8x 32bit wors for SHA-256,
-                                                      7x 32bit wors for SHA-224,
-                                                      5x 32bit words for SHA-1 or
-                                                      4x 32bit words for MD5  */
-} HASH_MsgDigest; 
+	uint32_t Data[8]; /*!< Message digest result : 8x 32bit wors for SHA-256,
+	 7x 32bit wors for SHA-224,
+	 5x 32bit words for SHA-1 or
+	 4x 32bit words for MD5  */
+} HASH_MsgDigest;
 
 /** 
-  * @brief  HASH context swapping structure definition  
-  */ 
+ * @brief  HASH context swapping structure definition  
+ */
 typedef struct
 {
-  uint32_t HASH_IMR; 
-  uint32_t HASH_STR;      
-  uint32_t HASH_CR;     
-  uint32_t HASH_CSR[54];       
-}HASH_Context;
+	uint32_t HASH_IMR;
+	uint32_t HASH_STR;
+	uint32_t HASH_CR;
+	uint32_t HASH_CSR[54];
+} HASH_Context;
 
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup HASH_Exported_Constants
-  * @{
-  */ 
+ * @{
+ */
 
 /** @defgroup HASH_Algo_Selection 
-  * @{
-  */ 
+ * @{
+ */
 #define HASH_AlgoSelection_SHA1      ((uint32_t)0x0000) /*!< HASH function is SHA1   */
 #define HASH_AlgoSelection_SHA224    HASH_CR_ALGO_1     /*!< HASH function is SHA224 */
 #define HASH_AlgoSelection_SHA256    HASH_CR_ALGO       /*!< HASH function is SHA256 */
@@ -104,24 +105,24 @@ typedef struct
                                               ((ALGOSELECTION) == HASH_AlgoSelection_SHA256) || \
                                               ((ALGOSELECTION) == HASH_AlgoSelection_MD5))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup HASH_processor_Algorithm_Mode 
-  * @{
-  */ 
+ * @{
+ */
 #define HASH_AlgoMode_HASH         ((uint32_t)0x00000000) /*!< Algorithm is HASH */ 
 #define HASH_AlgoMode_HMAC         HASH_CR_MODE           /*!< Algorithm is HMAC */
 
 #define IS_HASH_ALGOMODE(ALGOMODE) (((ALGOMODE) == HASH_AlgoMode_HASH) || \
                                     ((ALGOMODE) == HASH_AlgoMode_HMAC))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup HASH_Data_Type  
-  * @{
-  */  
+ * @{
+ */
 #define HASH_DataType_32b          ((uint32_t)0x0000) /*!< 32-bit data. No swapping                     */
 #define HASH_DataType_16b          HASH_CR_DATATYPE_0 /*!< 16-bit data. Each half word is swapped       */
 #define HASH_DataType_8b           HASH_CR_DATATYPE_1 /*!< 8-bit data. All bytes are swapped            */
@@ -132,46 +133,46 @@ typedef struct
                                     ((DATATYPE) == HASH_DataType_8b) || \
                                     ((DATATYPE) == HASH_DataType_1b))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup HASH_HMAC_Long_key_only_for_HMAC_mode  
-  * @{
-  */ 
+ * @{
+ */
 #define HASH_HMACKeyType_ShortKey      ((uint32_t)0x00000000) /*!< HMAC Key is <= 64 bytes */
 #define HASH_HMACKeyType_LongKey       HASH_CR_LKEY           /*!< HMAC Key is > 64 bytes  */
 
 #define IS_HASH_HMAC_KEYTYPE(KEYTYPE) (((KEYTYPE) == HASH_HMACKeyType_ShortKey) || \
                                        ((KEYTYPE) == HASH_HMACKeyType_LongKey))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup Number_of_valid_bits_in_last_word_of_the_message   
-  * @{
-  */  
+ * @{
+ */
 #define IS_HASH_VALIDBITSNUMBER(VALIDBITS) ((VALIDBITS) <= 0x1F)
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup HASH_interrupts_definition   
-  * @{
-  */  
+ * @{
+ */
 #define HASH_IT_DINI               HASH_IMR_DINIM  /*!< A new block can be entered into the input buffer (DIN) */
 #define HASH_IT_DCI                HASH_IMR_DCIM   /*!< Digest calculation complete                            */
 
 #define IS_HASH_IT(IT) ((((IT) & (uint32_t)0xFFFFFFFC) == 0x00000000) && ((IT) != 0x00000000))
 #define IS_HASH_GET_IT(IT) (((IT) == HASH_IT_DINI) || ((IT) == HASH_IT_DCI))
-				   
+
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup HASH_flags_definition   
-  * @{
-  */  
+ * @{
+ */
 #define HASH_FLAG_DINIS            HASH_SR_DINIS  /*!< 16 locations are free in the DIN : A new block can be entered into the input buffer */
 #define HASH_FLAG_DCIS             HASH_SR_DCIS   /*!< Digest calculation complete                                                         */
 #define HASH_FLAG_DMAS             HASH_SR_DMAS   /*!< DMA interface is enabled (DMAE=1) or a transfer is ongoing                          */
@@ -188,16 +189,16 @@ typedef struct
                                  ((FLAG) == HASH_FLAG_DCIS))                                 
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /* Exported macro ------------------------------------------------------------*/
-/* Exported functions --------------------------------------------------------*/ 
-  
+/* Exported functions --------------------------------------------------------*/
+
 /*  Function used to set the HASH configuration to the default reset state ****/
 void HASH_DeInit(void);
 
@@ -230,15 +231,11 @@ void HASH_ClearITPendingBit(uint32_t HASH_IT);
 
 /* High Level SHA1 functions **************************************************/
 ErrorStatus HASH_SHA1(uint8_t *Input, uint32_t Ilen, uint8_t Output[20]);
-ErrorStatus HMAC_SHA1(uint8_t *Key, uint32_t Keylen,
-                      uint8_t *Input, uint32_t Ilen,
-                      uint8_t Output[20]);
+ErrorStatus HMAC_SHA1(uint8_t *Key, uint32_t Keylen, uint8_t *Input, uint32_t Ilen, uint8_t Output[20]);
 
 /* High Level MD5 functions ***************************************************/
 ErrorStatus HASH_MD5(uint8_t *Input, uint32_t Ilen, uint8_t Output[16]);
-ErrorStatus HMAC_MD5(uint8_t *Key, uint32_t Keylen,
-                     uint8_t *Input, uint32_t Ilen,
-                     uint8_t Output[16]);
+ErrorStatus HMAC_MD5(uint8_t *Key, uint32_t Keylen, uint8_t *Input, uint32_t Ilen, uint8_t Output[16]);
 
 #ifdef __cplusplus
 }
@@ -247,11 +244,11 @@ ErrorStatus HMAC_MD5(uint8_t *Key, uint32_t Keylen,
 #endif /*__STM32F4xx_HASH_H */
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -36,12 +36,12 @@
 
 #if defined (__cplusplus)
 extern "C"
-{
+{	
 #endif
 
 #if defined(INCLUDE_TRACE_ITM)
-  int
-  _write_trace_itm(char* ptr, int len);
+int
+_write_trace_itm(char* ptr, int len);
 #endif
 
 #if defined(INCLUDE_TRACE_SEMIHOSTING_STDOUT)

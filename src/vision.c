@@ -18,7 +18,7 @@ void UART4_IRQHandler()
 			case 0:
 			{
 				uart_buf[0] = data;
-				if(data == 0x1F)
+				if (data == 0x1F)
 				{
 					uart_cnt = 1;
 				}
@@ -54,13 +54,13 @@ void UART4_IRQHandler()
 			{
 				uart_buf[9] = data;
 				uart_cnt = 0;
-				uint16_t ux = *(uint16_t *)(uart_buf + 4);
-				uint16_t uy = *(uint16_t *)(uart_buf + 6);
-				uint16_t uz = *(uint16_t *)(uart_buf + 8);
-				int16_t x = *(int16_t *)(&ux);
-				int16_t y = *(int16_t *)(&uy);
-				int16_t z = *(int16_t *)(&uz);
-				float tan = (float)x / (float)z;
+				uint16_t ux = *(uint16_t *) (uart_buf + 4);
+				uint16_t uy = *(uint16_t *) (uart_buf + 6);
+				uint16_t uz = *(uint16_t *) (uart_buf + 8);
+				int16_t x = *(int16_t *) (&ux);
+				int16_t y = *(int16_t *) (&uy);
+				int16_t z = *(int16_t *) (&uz);
+				float tan = (float) x / (float) z;
 				float a = atanf(tan);
 				if (a > 0.25)
 				{

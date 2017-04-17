@@ -1,106 +1,104 @@
 /**
-  ******************************************************************************
-  * @file    stm32f4xx_exti.h
-  * @author  MCD Application Team
-  * @version V1.3.0
-  * @date    08-November-2013
-  * @brief   This file contains all the functions prototypes for the EXTI firmware
-  *          library.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    stm32f4xx_exti.h
+ * @author  MCD Application Team
+ * @version V1.3.0
+ * @date    08-November-2013
+ * @brief   This file contains all the functions prototypes for the EXTI firmware
+ *          library.
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
+ *
+ * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *        http://www.st.com/software_license_agreement_liberty_v2
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4xx_EXTI_H
 #define __STM32F4xx_EXTI_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{	
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @addtogroup EXTI
-  * @{
-  */
+ * @{
+ */
 
 /* Exported types ------------------------------------------------------------*/
 
 /** 
-  * @brief  EXTI mode enumeration  
-  */
+ * @brief  EXTI mode enumeration  
+ */
 
 typedef enum
 {
-  EXTI_Mode_Interrupt = 0x00,
-  EXTI_Mode_Event = 0x04
-}EXTIMode_TypeDef;
+	EXTI_Mode_Interrupt = 0x00, EXTI_Mode_Event = 0x04
+} EXTIMode_TypeDef;
 
 #define IS_EXTI_MODE(MODE) (((MODE) == EXTI_Mode_Interrupt) || ((MODE) == EXTI_Mode_Event))
 
 /** 
-  * @brief  EXTI Trigger enumeration  
-  */
+ * @brief  EXTI Trigger enumeration  
+ */
 
 typedef enum
 {
-  EXTI_Trigger_Rising = 0x08,
-  EXTI_Trigger_Falling = 0x0C,  
-  EXTI_Trigger_Rising_Falling = 0x10
-}EXTITrigger_TypeDef;
+	EXTI_Trigger_Rising = 0x08, EXTI_Trigger_Falling = 0x0C, EXTI_Trigger_Rising_Falling = 0x10
+} EXTITrigger_TypeDef;
 
 #define IS_EXTI_TRIGGER(TRIGGER) (((TRIGGER) == EXTI_Trigger_Rising) || \
                                   ((TRIGGER) == EXTI_Trigger_Falling) || \
                                   ((TRIGGER) == EXTI_Trigger_Rising_Falling))
 /** 
-  * @brief  EXTI Init Structure definition  
-  */
+ * @brief  EXTI Init Structure definition  
+ */
 
 typedef struct
 {
-  uint32_t EXTI_Line;               /*!< Specifies the EXTI lines to be enabled or disabled.
-                                         This parameter can be any combination value of @ref EXTI_Lines */
-   
-  EXTIMode_TypeDef EXTI_Mode;       /*!< Specifies the mode for the EXTI lines.
-                                         This parameter can be a value of @ref EXTIMode_TypeDef */
-
-  EXTITrigger_TypeDef EXTI_Trigger; /*!< Specifies the trigger signal active edge for the EXTI lines.
-                                         This parameter can be a value of @ref EXTITrigger_TypeDef */
-
-  FunctionalState EXTI_LineCmd;     /*!< Specifies the new state of the selected EXTI lines.
-                                         This parameter can be set either to ENABLE or DISABLE */ 
-}EXTI_InitTypeDef;
+	uint32_t EXTI_Line; /*!< Specifies the EXTI lines to be enabled or disabled.
+	 This parameter can be any combination value of @ref EXTI_Lines */
+	
+	EXTIMode_TypeDef EXTI_Mode; /*!< Specifies the mode for the EXTI lines.
+	 This parameter can be a value of @ref EXTIMode_TypeDef */
+	
+	EXTITrigger_TypeDef EXTI_Trigger; /*!< Specifies the trigger signal active edge for the EXTI lines.
+	 This parameter can be a value of @ref EXTITrigger_TypeDef */
+	
+	FunctionalState EXTI_LineCmd; /*!< Specifies the new state of the selected EXTI lines.
+	 This parameter can be set either to ENABLE or DISABLE */
+} EXTI_InitTypeDef;
 
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup EXTI_Exported_Constants
-  * @{
-  */
+ * @{
+ */
 
 /** @defgroup EXTI_Lines 
-  * @{
-  */
+ * @{
+ */
 
 #define EXTI_Line0       ((uint32_t)0x00001)     /*!< External interrupt line 0 */
 #define EXTI_Line1       ((uint32_t)0x00002)     /*!< External interrupt line 1 */
@@ -125,7 +123,7 @@ typedef struct
 #define EXTI_Line20      ((uint32_t)0x00100000)  /*!< External interrupt line 20 Connected to the USB OTG HS (configured in FS) Wakeup event  */
 #define EXTI_Line21      ((uint32_t)0x00200000)  /*!< External interrupt line 21 Connected to the RTC Tamper and Time Stamp events */                                               
 #define EXTI_Line22      ((uint32_t)0x00400000)  /*!< External interrupt line 22 Connected to the RTC Wakeup event */                                               
-                                          
+
 #define IS_EXTI_LINE(LINE) ((((LINE) & (uint32_t)0xFF800000) == 0x00) && ((LINE) != (uint16_t)0x00))
 
 #define IS_GET_EXTI_LINE(LINE) (((LINE) == EXTI_Line0) || ((LINE) == EXTI_Line1) || \
@@ -140,14 +138,14 @@ typedef struct
                                 ((LINE) == EXTI_Line18) || ((LINE) == EXTI_Line19) || \
                                 ((LINE) == EXTI_Line20) || ((LINE) == EXTI_Line21) ||\
                                 ((LINE) == EXTI_Line22))
-                    
-/**
-  * @}
-  */
 
 /**
-  * @}
-  */
+ * @}
+ */
+
+/**
+ * @}
+ */
 
 /* Exported macro ------------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------*/
@@ -173,11 +171,11 @@ void EXTI_ClearITPendingBit(uint32_t EXTI_Line);
 #endif /* __STM32F4xx_EXTI_H */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

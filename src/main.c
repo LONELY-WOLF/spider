@@ -27,24 +27,23 @@ void Delay(__IO uint32_t nCount)
 int main()
 {
 	int delta;
-
+	
 	/*Обновляем значение переменной SystemCoreClock - системной тактовой частоты, понадобится при дальнейших вычислениях*/
 	SystemCoreClockUpdate();
-
+	
 	spider_init();
-    /* Configure the LEDs */
-    STM_EVAL_LEDInit(LED_Green);
-    STM_EVAL_LEDInit(LED_Orange);
-    STM_EVAL_LEDInit(LED_Red);
-    STM_EVAL_LEDInit(LED_Blue);
-
-
-    STM_EVAL_LEDOn(LED_Orange);
-
-    /*STM_EVAL_LEDOn(LED_Green);
-    STM_EVAL_LEDOn(LED_Orange);
-    STM_EVAL_LEDOn(LED_Red);
-    STM_EVAL_LEDOn(LED_Blue);*/
+	/* Configure the LEDs */
+	STM_EVAL_LEDInit(LED_Green);
+	STM_EVAL_LEDInit(LED_Orange);
+	STM_EVAL_LEDInit(LED_Red);
+	STM_EVAL_LEDInit(LED_Blue);
+	
+	STM_EVAL_LEDOn(LED_Orange);
+	
+	/*STM_EVAL_LEDOn(LED_Green);
+	 STM_EVAL_LEDOn(LED_Orange);
+	 STM_EVAL_LEDOn(LED_Red);
+	 STM_EVAL_LEDOn(LED_Blue);*/
 
 	/*!< At this stage the microcontroller clock setting is already configured,
 	 this is done through SystemInit() function which is called from startup
@@ -61,16 +60,16 @@ int main()
 		HID_GAMEPAD_Data.Button[i] = 127;
 	}
 	HID_GAMEPAD_Data.HatSwitch = None;
-
+	
 	/* Init Host Library */
 	USBH_Init(&USB_OTG_Core_dev, USB_OTG_FS_CORE_ID, &USB_Host, &HID_cb, &USR_Callbacks);
-
+	
 	Init_Work();
-
+	
 	while (1)
 	{
 		USBH_Process(&USB_OTG_Core_dev, &USB_Host);
-
+		
 		if (LegsUpdated)
 		{
 			switch (HID_GAMEPAD_Data.HatSwitch)
@@ -102,21 +101,21 @@ int main()
 				}
 			}
 			Step();
-
+			
 			//SetLegPos(LEG_L2, 0, 150, 120);
 			//updateServo(RadToPulse(M_PI_4), &Legs[LEG_L2].H1Conf);
-
+			
 			LegsUpdated = 0;
 		}
 	}
-
+	
 	/*while (1)
-	{
-		if(LegsUpdated)
-		{
-			Step();
-			LegsUpdated = 0;
-		}
-	}*/
+	 {
+	 if(LegsUpdated)
+	 {
+	 Step();
+	 LegsUpdated = 0;
+	 }
+	 }*/
 }
 

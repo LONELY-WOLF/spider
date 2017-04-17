@@ -1,60 +1,61 @@
 /**
-  ******************************************************************************
-  * @file    stm32f4xx_syscfg.h
-  * @author  MCD Application Team
-  * @version V1.3.0
-  * @date    08-November-2013
-  * @brief   This file contains all the functions prototypes for the SYSCFG firmware
-  *          library. 
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    stm32f4xx_syscfg.h
+ * @author  MCD Application Team
+ * @version V1.3.0
+ * @date    08-November-2013
+ * @brief   This file contains all the functions prototypes for the SYSCFG firmware
+ *          library. 
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
+ *
+ * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *        http://www.st.com/software_license_agreement_liberty_v2
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4xx_SYSCFG_H
 #define __STM32F4xx_SYSCFG_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{	
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @addtogroup SYSCFG
-  * @{
-  */ 
+ * @{
+ */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
-  
+
 /** @defgroup SYSCFG_Exported_Constants 
-  * @{
-  */ 
+ * @{
+ */
 
 /** @defgroup SYSCFG_EXTI_Port_Sources 
-  * @{
-  */ 
+ * @{
+ */
 #define EXTI_PortSourceGPIOA       ((uint8_t)0x00)
 #define EXTI_PortSourceGPIOB       ((uint8_t)0x01)
 #define EXTI_PortSourceGPIOC       ((uint8_t)0x02)
@@ -78,15 +79,14 @@
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOI) || \
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOJ) || \
                                          ((PORTSOURCE) == EXTI_PortSourceGPIOK))
-                                         
-/**
-  * @}
-  */ 
 
+/**
+ * @}
+ */
 
 /** @defgroup SYSCFG_EXTI_Pin_Sources 
-  * @{
-  */ 
+ * @{
+ */
 #define EXTI_PinSource0            ((uint8_t)0x00)
 #define EXTI_PinSource1            ((uint8_t)0x01)
 #define EXTI_PinSource2            ((uint8_t)0x02)
@@ -120,13 +120,12 @@
                                        ((PINSOURCE) == EXTI_PinSource14) || \
                                        ((PINSOURCE) == EXTI_PinSource15))
 /**
-  * @}
-  */ 
-
+ * @}
+ */
 
 /** @defgroup SYSCFG_Memory_Remap_Config 
-  * @{
-  */ 
+ * @{
+ */
 #define SYSCFG_MemoryRemap_Flash       ((uint8_t)0x00)
 #define SYSCFG_MemoryRemap_SystemFlash ((uint8_t)0x01)
 #define SYSCFG_MemoryRemap_SRAM        ((uint8_t)0x03)
@@ -160,37 +159,36 @@
                                                ((REMAP) == SYSCFG_MemoryRemap_SDRAM)       || \
                                                ((REMAP) == SYSCFG_MemoryRemap_FMC))
 #endif /* STM32F427_437xx ||  STM32F429_439xx */
-                                                                                              
-/**
-  * @}
-  */ 
 
+/**
+ * @}
+ */
 
 /** @defgroup SYSCFG_ETHERNET_Media_Interface 
-  * @{
-  */ 
+ * @{
+ */
 #define SYSCFG_ETH_MediaInterface_MII    ((uint32_t)0x00000000)
 #define SYSCFG_ETH_MediaInterface_RMII   ((uint32_t)0x00000001)
 
 #define IS_SYSCFG_ETH_MEDIA_INTERFACE(INTERFACE) (((INTERFACE) == SYSCFG_ETH_MediaInterface_MII) || \
                                                  ((INTERFACE) == SYSCFG_ETH_MediaInterface_RMII))
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /* Exported macro ------------------------------------------------------------*/
-/* Exported functions --------------------------------------------------------*/ 
- 
+/* Exported functions --------------------------------------------------------*/
+
 void SYSCFG_DeInit(void);
-void       SYSCFG_MemoryRemapConfig(uint8_t SYSCFG_MemoryRemap);
-void       SYSCFG_MemorySwappingBank(FunctionalState NewState);
-void       SYSCFG_EXTILineConfig(uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex);
-void       SYSCFG_ETH_MediaInterfaceConfig(uint32_t SYSCFG_ETH_MediaInterface); 
-void       SYSCFG_CompensationCellCmd(FunctionalState NewState); 
+void SYSCFG_MemoryRemapConfig(uint8_t SYSCFG_MemoryRemap);
+void SYSCFG_MemorySwappingBank(FunctionalState NewState);
+void SYSCFG_EXTILineConfig(uint8_t EXTI_PortSourceGPIOx, uint8_t EXTI_PinSourcex);
+void SYSCFG_ETH_MediaInterfaceConfig(uint32_t SYSCFG_ETH_MediaInterface);
+void SYSCFG_CompensationCellCmd(FunctionalState NewState);
 FlagStatus SYSCFG_GetCompensationCellStatus(void);
 
 #ifdef __cplusplus
@@ -200,11 +198,11 @@ FlagStatus SYSCFG_GetCompensationCellStatus(void);
 #endif /*__STM32F4xx_SYSCFG_H */
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

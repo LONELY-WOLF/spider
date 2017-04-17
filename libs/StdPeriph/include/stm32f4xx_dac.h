@@ -1,82 +1,83 @@
 /**
-  ******************************************************************************
-  * @file    stm32f4xx_dac.h
-  * @author  MCD Application Team
-  * @version V1.3.0
-  * @date    08-November-2013
-  * @brief   This file contains all the functions prototypes for the DAC firmware 
-  *          library.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file    stm32f4xx_dac.h
+ * @author  MCD Application Team
+ * @version V1.3.0
+ * @date    08-November-2013
+ * @brief   This file contains all the functions prototypes for the DAC firmware 
+ *          library.
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
+ *
+ * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *        http://www.st.com/software_license_agreement_liberty_v2
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4xx_DAC_H
 #define __STM32F4xx_DAC_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{	
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @addtogroup DAC
-  * @{
-  */
+ * @{
+ */
 
 /* Exported types ------------------------------------------------------------*/
 
 /** 
-  * @brief  DAC Init structure definition
-  */
+ * @brief  DAC Init structure definition
+ */
 
 typedef struct
 {
-  uint32_t DAC_Trigger;                      /*!< Specifies the external trigger for the selected DAC channel.
-                                                  This parameter can be a value of @ref DAC_trigger_selection */
-
-  uint32_t DAC_WaveGeneration;               /*!< Specifies whether DAC channel noise waves or triangle waves
-                                                  are generated, or whether no wave is generated.
-                                                  This parameter can be a value of @ref DAC_wave_generation */
-
-  uint32_t DAC_LFSRUnmask_TriangleAmplitude; /*!< Specifies the LFSR mask for noise wave generation or
-                                                  the maximum amplitude triangle generation for the DAC channel. 
-                                                  This parameter can be a value of @ref DAC_lfsrunmask_triangleamplitude */
-
-  uint32_t DAC_OutputBuffer;                 /*!< Specifies whether the DAC channel output buffer is enabled or disabled.
-                                                  This parameter can be a value of @ref DAC_output_buffer */
-}DAC_InitTypeDef;
+	uint32_t DAC_Trigger; /*!< Specifies the external trigger for the selected DAC channel.
+	 This parameter can be a value of @ref DAC_trigger_selection */
+	
+	uint32_t DAC_WaveGeneration; /*!< Specifies whether DAC channel noise waves or triangle waves
+	 are generated, or whether no wave is generated.
+	 This parameter can be a value of @ref DAC_wave_generation */
+	
+	uint32_t DAC_LFSRUnmask_TriangleAmplitude; /*!< Specifies the LFSR mask for noise wave generation or
+	 the maximum amplitude triangle generation for the DAC channel. 
+	 This parameter can be a value of @ref DAC_lfsrunmask_triangleamplitude */
+	
+	uint32_t DAC_OutputBuffer; /*!< Specifies whether the DAC channel output buffer is enabled or disabled.
+	 This parameter can be a value of @ref DAC_output_buffer */
+} DAC_InitTypeDef;
 
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup DAC_Exported_Constants
-  * @{
-  */
+ * @{
+ */
 
 /** @defgroup DAC_trigger_selection 
-  * @{
-  */
+ * @{
+ */
 
 #define DAC_Trigger_None                   ((uint32_t)0x00000000) /*!< Conversion is automatic once the DAC1_DHRxxxx register 
                                                                        has been loaded, and not by external trigger */
@@ -101,12 +102,12 @@ typedef struct
                                  ((TRIGGER) == DAC_Trigger_Software))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup DAC_wave_generation 
-  * @{
-  */
+ * @{
+ */
 
 #define DAC_WaveGeneration_None            ((uint32_t)0x00000000)
 #define DAC_WaveGeneration_Noise           ((uint32_t)0x00000040)
@@ -115,12 +116,12 @@ typedef struct
                                     ((WAVE) == DAC_WaveGeneration_Noise) || \
                                     ((WAVE) == DAC_WaveGeneration_Triangle))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup DAC_lfsrunmask_triangleamplitude
-  * @{
-  */
+ * @{
+ */
 
 #define DAC_LFSRUnmask_Bit0                ((uint32_t)0x00000000) /*!< Unmask DAC channel LFSR bit0 for noise wave generation */
 #define DAC_LFSRUnmask_Bits1_0             ((uint32_t)0x00000100) /*!< Unmask DAC channel LFSR bit[1:0] for noise wave generation */
@@ -172,36 +173,36 @@ typedef struct
                                                       ((VALUE) == DAC_TriangleAmplitude_2047) || \
                                                       ((VALUE) == DAC_TriangleAmplitude_4095))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup DAC_output_buffer 
-  * @{
-  */
+ * @{
+ */
 
 #define DAC_OutputBuffer_Enable            ((uint32_t)0x00000000)
 #define DAC_OutputBuffer_Disable           ((uint32_t)0x00000002)
 #define IS_DAC_OUTPUT_BUFFER_STATE(STATE) (((STATE) == DAC_OutputBuffer_Enable) || \
                                            ((STATE) == DAC_OutputBuffer_Disable))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup DAC_Channel_selection 
-  * @{
-  */
+ * @{
+ */
 
 #define DAC_Channel_1                      ((uint32_t)0x00000000)
 #define DAC_Channel_2                      ((uint32_t)0x00000010)
 #define IS_DAC_CHANNEL(CHANNEL) (((CHANNEL) == DAC_Channel_1) || \
                                  ((CHANNEL) == DAC_Channel_2))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup DAC_data_alignement 
-  * @{
-  */
+ * @{
+ */
 
 #define DAC_Align_12b_R                    ((uint32_t)0x00000000)
 #define DAC_Align_12b_L                    ((uint32_t)0x00000004)
@@ -210,59 +211,59 @@ typedef struct
                              ((ALIGN) == DAC_Align_12b_L) || \
                              ((ALIGN) == DAC_Align_8b_R))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup DAC_wave_generation 
-  * @{
-  */
+ * @{
+ */
 
 #define DAC_Wave_Noise                     ((uint32_t)0x00000040)
 #define DAC_Wave_Triangle                  ((uint32_t)0x00000080)
 #define IS_DAC_WAVE(WAVE) (((WAVE) == DAC_Wave_Noise) || \
                            ((WAVE) == DAC_Wave_Triangle))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup DAC_data 
-  * @{
-  */
+ * @{
+ */
 
 #define IS_DAC_DATA(DATA) ((DATA) <= 0xFFF0) 
 /**
-  * @}
-  */
-  
+ * @}
+ */
+
 /** @defgroup DAC_interrupts_definition 
-  * @{
-  */   
+ * @{
+ */
 #define DAC_IT_DMAUDR                      ((uint32_t)0x00002000)  
 #define IS_DAC_IT(IT) (((IT) == DAC_IT_DMAUDR)) 
 
 /**
-  * @}
-  */ 
+ * @}
+ */
 
 /** @defgroup DAC_flags_definition 
-  * @{
-  */ 
-  
+ * @{
+ */
+
 #define DAC_FLAG_DMAUDR                    ((uint32_t)0x00002000)  
 #define IS_DAC_FLAG(FLAG) (((FLAG) == DAC_FLAG_DMAUDR))  
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /* Exported macro ------------------------------------------------------------*/
-/* Exported functions --------------------------------------------------------*/  
+/* Exported functions --------------------------------------------------------*/
 
-/*  Function used to set the DAC configuration to the default reset state *****/  
+/*  Function used to set the DAC configuration to the default reset state *****/
 void DAC_DeInit(void);
 
 /*  DAC channels configuration: trigger, output buffer, data format functions */
@@ -294,11 +295,11 @@ void DAC_ClearITPendingBit(uint32_t DAC_Channel, uint32_t DAC_IT);
 #endif /*__STM32F4xx_DAC_H */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

@@ -1,60 +1,61 @@
 /**
-  ******************************************************************************
-  * @file    stm32f4xx_pwr.h
-  * @author  MCD Application Team
-  * @version V1.3.0
-  * @date    08-November-2013
-  * @brief   This file contains all the functions prototypes for the PWR firmware 
-  *          library.
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
-  *
-  * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
-  * You may not use this file except in compliance with the License.
-  * You may obtain a copy of the License at:
-  *
-  *        http://www.st.com/software_license_agreement_liberty_v2
-  *
-  * Unless required by applicable law or agreed to in writing, software 
-  * distributed under the License is distributed on an "AS IS" BASIS, 
-  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  * See the License for the specific language governing permissions and
-  * limitations under the License.
-  *
-  ******************************************************************************
-  */ 
+ ******************************************************************************
+ * @file    stm32f4xx_pwr.h
+ * @author  MCD Application Team
+ * @version V1.3.0
+ * @date    08-November-2013
+ * @brief   This file contains all the functions prototypes for the PWR firmware 
+ *          library.
+ ******************************************************************************
+ * @attention
+ *
+ * <h2><center>&copy; COPYRIGHT 2013 STMicroelectronics</center></h2>
+ *
+ * Licensed under MCD-ST Liberty SW License Agreement V2, (the "License");
+ * You may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at:
+ *
+ *        http://www.st.com/software_license_agreement_liberty_v2
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS, 
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ ******************************************************************************
+ */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4xx_PWR_H
 #define __STM32F4xx_PWR_H
 
 #ifdef __cplusplus
- extern "C" {
+extern "C"
+{	
 #endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx.h"
 
 /** @addtogroup STM32F4xx_StdPeriph_Driver
-  * @{
-  */
+ * @{
+ */
 
 /** @addtogroup PWR
-  * @{
-  */ 
+ * @{
+ */
 
 /* Exported types ------------------------------------------------------------*/
 /* Exported constants --------------------------------------------------------*/
 
 /** @defgroup PWR_Exported_Constants
-  * @{
-  */ 
+ * @{
+ */
 
 /** @defgroup PWR_PVD_detection_level 
-  * @{
-  */ 
+ * @{
+ */
 #define PWR_PVDLevel_0                  PWR_CR_PLS_LEV0
 #define PWR_PVDLevel_1                  PWR_CR_PLS_LEV1
 #define PWR_PVDLevel_2                  PWR_CR_PLS_LEV2
@@ -69,13 +70,12 @@
                                  ((LEVEL) == PWR_PVDLevel_4) || ((LEVEL) == PWR_PVDLevel_5)|| \
                                  ((LEVEL) == PWR_PVDLevel_6) || ((LEVEL) == PWR_PVDLevel_7))
 /**
-  * @}
-  */
+ * @}
+ */
 
-  
 /** @defgroup PWR_Regulator_state_in_STOP_mode 
-  * @{
-  */
+ * @{
+ */
 #define PWR_MainRegulator_ON                        ((uint32_t)0x00000000)
 #define PWR_LowPowerRegulator_ON                    PWR_CR_LPDS
 
@@ -87,12 +87,12 @@
                                      ((REGULATOR) == PWR_LowPowerRegulator_ON))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup PWR_Regulator_state_in_UnderDrive_mode 
-  * @{
-  */
+ * @{
+ */
 #define PWR_MainRegulator_UnderDrive_ON               PWR_CR_MRUDS
 #define PWR_LowPowerRegulator_UnderDrive_ON           ((uint32_t)(PWR_CR_LPDS | PWR_CR_LPUDS))
 
@@ -100,22 +100,22 @@
                                                 ((REGULATOR) == PWR_LowPowerRegulator_UnderDrive_ON))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup PWR_STOP_mode_entry 
-  * @{
-  */
+ * @{
+ */
 #define PWR_STOPEntry_WFI               ((uint8_t)0x01)
 #define PWR_STOPEntry_WFE               ((uint8_t)0x02)
 #define IS_PWR_STOP_ENTRY(ENTRY) (((ENTRY) == PWR_STOPEntry_WFI) || ((ENTRY) == PWR_STOPEntry_WFE))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup PWR_Regulator_Voltage_Scale 
-  * @{
-  */
+ * @{
+ */
 #define PWR_Regulator_Voltage_Scale1    ((uint32_t)0x0000C000)
 #define PWR_Regulator_Voltage_Scale2    ((uint32_t)0x00008000)
 #define PWR_Regulator_Voltage_Scale3    ((uint32_t)0x00004000)
@@ -123,12 +123,12 @@
                                            ((VOLTAGE) == PWR_Regulator_Voltage_Scale2) || \
                                            ((VOLTAGE) == PWR_Regulator_Voltage_Scale3))
 /**
-  * @}
-  */
+ * @}
+ */
 
 /** @defgroup PWR_Flag 
-  * @{
-  */
+ * @{
+ */
 #define PWR_FLAG_WU                     PWR_CSR_WUF
 #define PWR_FLAG_SB                     PWR_CSR_SBF
 #define PWR_FLAG_PVDO                   PWR_CSR_PVDO
@@ -146,50 +146,49 @@
                                ((FLAG) == PWR_FLAG_VOSRDY) || ((FLAG) == PWR_FLAG_ODRDY) || \
                                ((FLAG) == PWR_FLAG_ODSWRDY) || ((FLAG) == PWR_FLAG_UDRDY))
 
-
 #define IS_PWR_CLEAR_FLAG(FLAG) (((FLAG) == PWR_FLAG_WU) || ((FLAG) == PWR_FLAG_SB) || \
                                  ((FLAG) == PWR_FLAG_UDRDY))
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /* Exported macro ------------------------------------------------------------*/
-/* Exported functions --------------------------------------------------------*/ 
+/* Exported functions --------------------------------------------------------*/
 
-/* Function used to set the PWR configuration to the default reset state ******/ 
+/* Function used to set the PWR configuration to the default reset state ******/
 void PWR_DeInit(void);
 
-/* Backup Domain Access function **********************************************/ 
+/* Backup Domain Access function **********************************************/
 void PWR_BackupAccessCmd(FunctionalState NewState);
 
-/* PVD configuration functions ************************************************/ 
+/* PVD configuration functions ************************************************/
 void PWR_PVDLevelConfig(uint32_t PWR_PVDLevel);
 void PWR_PVDCmd(FunctionalState NewState);
 
-/* WakeUp pins configuration functions ****************************************/ 
+/* WakeUp pins configuration functions ****************************************/
 void PWR_WakeUpPinCmd(FunctionalState NewState);
 
-/* Main and Backup Regulators configuration functions *************************/ 
+/* Main and Backup Regulators configuration functions *************************/
 void PWR_BackupRegulatorCmd(FunctionalState NewState);
 void PWR_MainRegulatorModeConfig(uint32_t PWR_Regulator_Voltage);
 void PWR_OverDriveCmd(FunctionalState NewState);
 void PWR_OverDriveSWCmd(FunctionalState NewState);
 void PWR_UnderDriveCmd(FunctionalState NewState);
 
-/* FLASH Power Down configuration functions ***********************************/ 
+/* FLASH Power Down configuration functions ***********************************/
 void PWR_FlashPowerDownCmd(FunctionalState NewState);
 
-/* Low Power modes configuration functions ************************************/ 
+/* Low Power modes configuration functions ************************************/
 void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry);
 void PWR_EnterUnderDriveSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry);
 void PWR_EnterSTANDBYMode(void);
 
-/* Flags management functions *************************************************/ 
+/* Flags management functions *************************************************/
 FlagStatus PWR_GetFlagStatus(uint32_t PWR_FLAG);
 void PWR_ClearFlag(uint32_t PWR_FLAG);
 
@@ -200,11 +199,11 @@ void PWR_ClearFlag(uint32_t PWR_FLAG);
 #endif /* __STM32F4xx_PWR_H */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /**
-  * @}
-  */
+ * @}
+ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

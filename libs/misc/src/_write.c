@@ -18,25 +18,24 @@
 
 // The preprocessor definitions used for selection are in trace_impl.h.
 
-int
-_write(int fd, char* ptr, int len)
+int _write(int fd, char* ptr, int len)
 {
-  if (fd == 1)
-    {
+	if (fd == 1)
+	{
 #if defined(DEBUG)
-
+		
 #if defined(INCLUDE_TRACE_ITM)
-      return _write_trace_itm(ptr, len);
+		return _write_trace_itm(ptr, len);
 #elif defined(INCLUDE_TRACE_SEMIHOSTING_STDOUT)
-      return _write_trace_semihosting_stdout(ptr, len);
+		return _write_trace_semihosting_stdout(ptr, len);
 #elif defined(INCLUDE_TRACE_SEMIHOSTING_DEBUG)
-      return _write_trace_semihosting_debug(ptr, len);
+		return _write_trace_semihosting_debug(ptr, len);
 #else
 #warning "no trace implementation"
 #endif
-
+		
 #endif // DEBUG
-    }
-  return -1;
+	}
+	return -1;
 }
 

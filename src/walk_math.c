@@ -17,8 +17,8 @@ void SetLegPos(int legNum, float lx, float ly, float lz)
 	alpha2 -= alpha0;
 	float alpha3 = acosf(((LENGTH_L2 * LENGTH_L2) + (LENGTH_L3 * LENGTH_L3) - (l0 * l0)) / (2 * LENGTH_L2 * LENGTH_L3));
 	alpha3 -= M_PI_2;
-
-	if(Legs[legNum].H1Conf.Reversed)
+	
+	if (Legs[legNum].H1Conf.Reversed)
 	{
 		Legs[legNum].H1 = RadToPulse(-alpha1);
 	}
@@ -26,7 +26,7 @@ void SetLegPos(int legNum, float lx, float ly, float lz)
 	{
 		Legs[legNum].H1 = RadToPulse(alpha1);
 	}
-	if(Legs[legNum].V2Conf.Reversed)
+	if (Legs[legNum].V2Conf.Reversed)
 	{
 		Legs[legNum].V2 = RadToPulse(-alpha2);
 	}
@@ -34,7 +34,7 @@ void SetLegPos(int legNum, float lx, float ly, float lz)
 	{
 		Legs[legNum].V2 = RadToPulse(alpha2);
 	}
-	if(Legs[legNum].V3Conf.Reversed)
+	if (Legs[legNum].V3Conf.Reversed)
 	{
 		Legs[legNum].V3 = RadToPulse(-alpha3);
 	}
