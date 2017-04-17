@@ -57,7 +57,8 @@ static USBH_Status USBH_HID_InterfaceInit  (USB_OTG_CORE_HANDLE *pdev ,
                                             void *phost);
 
 static void  USBH_ParseHIDDesc (USBH_HIDDesc_TypeDef *desc, uint8_t *buf);
-void USBH_ParseRepDesc(HID_GAMEPAD_DataDesc_TypeDef *desc, uint8_t *buf, uint16_t len);
+
+static void USBH_ParseRepDesc(HID_GAMEPAD_DataDesc_TypeDef *desc, uint8_t *buf, uint16_t len);
 
 static void USBH_HID_InterfaceDeInit  (USB_OTG_CORE_HANDLE *pdev , 
                                        void *phost);
@@ -80,10 +81,6 @@ static USBH_Status USBH_Set_Idle (USB_OTG_CORE_HANDLE *pdev,
                                   USBH_HOST *phost,
                                   uint8_t duration,
                                   uint8_t reportId);
-
-static USBH_Status USBH_Set_Protocol (USB_OTG_CORE_HANDLE *pdev, 
-                                      USBH_HOST *phost,
-                                      uint8_t protocol);
 
 
 USBH_Class_cb_TypeDef  HID_cb = 
@@ -252,7 +249,6 @@ static USBH_Status USBH_HID_ClassRequest(USB_OTG_CORE_HANDLE *pdev ,
     {
     	USBH_ParseRepDesc(&HID_GAMEPAD_DataDesc, pdev->host.Rx_Buffer, HID_Desc.wItemLength);
       HID_Machine.ctl_state = HID_REQ_SET_IDLE;
-      //HID_Machine.ctl_state = HID_REQ_IDLE;
     }
     
     break;
@@ -269,20 +265,11 @@ static USBH_Status USBH_HID_ClassRequest(USB_OTG_CORE_HANDLE *pdev ,
     else if(classReqStatus == USBH_NOT_SUPPORTED) 
     {
       HID_Machine.ctl_state = HID_REQ_SET_PROTOCOL;        
-    } 
-  	STM_EVAL_LEDOn(LED_Red);
+    }
+
+    HID_Machine.ctl_state = HID_REQ_IDLE;
+    status = USBH_OK;
     break; 
-    
-  case HID_REQ_SET_PROTOCOL:
-    /* set protocol */
-    if (USBH_Set_Protocol (pdev ,pphost, 1) == USBH_OK)
-    {
-      HID_Machine.ctl_state = HID_REQ_IDLE;
-      
-      /* all requests performed*/
-      status = USBH_OK; 
-    } 
-    break;
     
   default:
     break;
@@ -490,44 +477,6 @@ USBH_Status USBH_Set_Report (USB_OTG_CORE_HANDLE *pdev,
   return USBH_CtlReq(pdev, phost, reportBuff , reportLen );
 }
 
-
-/**
-* @brief  USBH_Set_Protocol
-*         Set protocol State.
-* @param  pdev: Selected device
-* @param  protocol : Set Protocol for HID : boot/report protocol
-* @retval USBH_Status : Response for USB Set Protocol request
-*/
-static USBH_Status USBH_Set_Protocol(USB_OTG_CORE_HANDLE *pdev,
-                                     USBH_HOST *phost,
-                                     uint8_t protocol)
-{
-  
-  
-  phost->Control.setup.b.bmRequestType = USB_H2D | USB_REQ_RECIPIENT_INTERFACE |\
-    USB_REQ_TYPE_CLASS;
-  
-  
-  phost->Control.setup.b.bRequest = USB_HID_SET_PROTOCOL;
-  
-  if(protocol != 0)
-  {
-    /* Boot Protocol */
-    phost->Control.setup.b.wValue.w = 0;
-  }
-  else
-  {
-    /*Report Protocol*/
-    phost->Control.setup.b.wValue.w = 1;
-  }
-  
-  phost->Control.setup.b.wIndex.w = 0;
-  phost->Control.setup.b.wLength.w = 0;
-  
-  return USBH_CtlReq(pdev, phost, 0 , 0 );
-  
-}
-
 /**
 * @brief  USBH_ParseHIDDesc 
 *         This function Parse the HID descriptor
@@ -547,7 +496,7 @@ static void  USBH_ParseHIDDesc (USBH_HIDDesc_TypeDef *desc, uint8_t *buf)
   
 }
 
-void USBH_ParseRepDesc(HID_GAMEPAD_DataDesc_TypeDef *desc, uint8_t *buf, uint16_t len)
+static void USBH_ParseRepDesc(HID_GAMEPAD_DataDesc_TypeDef *desc, uint8_t *buf, uint16_t len)
 {
 	STM_EVAL_LEDOff(LED_Red);
 	uint8_t type = 0, size = 0, offset = 0, count = 0;
