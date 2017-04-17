@@ -5,7 +5,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "usbh_hid_core.h"
 
-typedef enum HatSwitchPos
+enum HatSwitchPos
 {
 	Up = 0,
 	UpRight,

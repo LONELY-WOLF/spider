@@ -33,7 +33,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbh_core.h"
-#include "usbh_usr_lcd.h"
 #include "usb_conf.h"
 #include <stdio.h>
 

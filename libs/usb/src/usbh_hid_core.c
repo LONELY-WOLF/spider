@@ -41,8 +41,6 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbh_hid_core.h"
-#include "usbh_hid_mouse.h"
-#include "usbh_hid_keybd.h"
 #include "usbh_hid_gamepad.h"
 
 __ALIGN_BEGIN HID_Machine_TypeDef        HID_Machine __ALIGN_END ;
@@ -117,17 +115,7 @@ static USBH_Status USBH_HID_InterfaceInit ( USB_OTG_CORE_HANDLE *pdev,
   if(pphost->device_prop.Itf_Desc[0].bInterfaceSubClass  == 0)// HID_BOOT_CODE)
   {
     /*Decode Bootclass Protocl: Mouse or Keyboard*/
-    if(pphost->device_prop.Itf_Desc[0].bInterfaceProtocol == HID_KEYBRD_BOOT_CODE)
-    {
-      HID_Machine.cb = &HID_KEYBRD_cb;
-      STM_EVAL_LEDToggle(LED_Orange);
-    }
-    else if(pphost->device_prop.Itf_Desc[0].bInterfaceProtocol  == HID_MOUSE_BOOT_CODE)		  
-    {
-      HID_Machine.cb = &HID_MOUSE_cb;
-      STM_EVAL_LEDToggle(LED_Red);
-    }
-    else if(pphost->device_prop.Itf_Desc[0].bInterfaceProtocol  == 0)
+    if(pphost->device_prop.Itf_Desc[0].bInterfaceProtocol  == 0)
     {
     	HID_Machine.cb = &HID_GAMEPAD_cb;
     	STM_EVAL_LEDToggle(LED_Green);
@@ -264,6 +252,7 @@ static USBH_Status USBH_HID_ClassRequest(USB_OTG_CORE_HANDLE *pdev ,
     {
     	USBH_ParseRepDesc(&HID_GAMEPAD_DataDesc, pdev->host.Rx_Buffer, HID_Desc.wItemLength);
       HID_Machine.ctl_state = HID_REQ_SET_IDLE;
+      //HID_Machine.ctl_state = HID_REQ_IDLE;
     }
     
     break;
@@ -281,11 +270,12 @@ static USBH_Status USBH_HID_ClassRequest(USB_OTG_CORE_HANDLE *pdev ,
     {
       HID_Machine.ctl_state = HID_REQ_SET_PROTOCOL;        
     } 
+  	STM_EVAL_LEDOn(LED_Red);
     break; 
     
   case HID_REQ_SET_PROTOCOL:
     /* set protocol */
-    if (USBH_Set_Protocol (pdev ,pphost, 0) == USBH_OK)
+    if (USBH_Set_Protocol (pdev ,pphost, 1) == USBH_OK)
     {
       HID_Machine.ctl_state = HID_REQ_IDLE;
       
