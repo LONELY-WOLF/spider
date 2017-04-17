@@ -4,7 +4,7 @@ Firmware for hexapod robot based on STM32F4 (STM32F4DISCOVERY board)
 ## Functions
 
 ### Input
-* USB gamepad.
+* USB gamepad. Both my dualshock-like gamepads work in second "Mode".
 * External commands from USART4. *Under development!* You can implement your own protocol. Works great for HC-05 + smartphone.
 
 ### Motor control
